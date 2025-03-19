@@ -17,7 +17,7 @@ let users = [
   // },
 ];
 
-// Alreadu in users route
+// Already in users route
 router.get("/", (req, res) => {
   console.log(users);
   res.send(users);
@@ -50,6 +50,26 @@ router.delete("/:id", (req, res) => {
   users = users.filter((user) => user.id !== id);
 
   res.send(`User with the id ${id} deleted from the database.`);
+});
+
+router.patch("/:id", (req, res) => {
+  const { id } = req.params;
+  const { firstname, lastName, age } = req.body;
+  
+  const user = users.find((user) => user.id === id);
+  
+  if(firstname){
+    user.firstname = firstname;
+  }
+  if(lastName){
+    user.lastName = lastName;
+  }
+  if(age){
+    user.age = age;
+  }
+
+
+
 });
 
 export default router;
