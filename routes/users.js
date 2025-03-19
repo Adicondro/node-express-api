@@ -1,75 +1,26 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
-uuidv4();
+
+import {
+  createUser,
+  getUsers,
+  getUser,
+  deleteUser,
+  updateUser,
+} from "../controllers/users.js";
 
 const router = express.Router();
 
-let users = [
-  // {
-  //   firstname: "John",
-  //   lastName: "Doe",
-  //   age: 25,
-  // },
-  // {
-  //   firstname: "Jane",
-  //   lastName: "Doe",
-  //   age: 24,
-  // },
-];
+
 
 // Already in users route
-router.get("/", (req, res) => {
-  console.log(users);
-  res.send(users);
-});
+router.get("/", getUsers);
 
-router.post("/", (req, res) => {
-  const user = req.body;
+router.post("/", createUser);
 
-  const userId = uuidv4();
+router.get("/:id", getUser);
 
-  users.push({
-    ...user,
-    id: userId,
-  });
+router.delete("/:id", deleteUser);
 
-  res.send(`User with the name ${user.firstname} added to the database!`);
-});
-
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-
-  const foundUser = users.find((user) => user.id === id);
-
-  res.send(foundUser);
-});
-
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-
-  users = users.filter((user) => user.id !== id);
-
-  res.send(`User with the id ${id} deleted from the database.`);
-});
-
-router.patch("/:id", (req, res) => {
-  const { id } = req.params;
-  const { firstname, lastName, age } = req.body;
-  
-  const user = users.find((user) => user.id === id);
-  
-  if(firstname){
-    user.firstname = firstname;
-  }
-  if(lastName){
-    user.lastName = lastName;
-  }
-  if(age){
-    user.age = age;
-  }
-
-
-
-});
+router.patch("/:id", updateUser);
 
 export default router;
