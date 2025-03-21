@@ -10,7 +10,13 @@ import {
 
 const router = express.Router();
 
+const app = express();
 
+// app.get("/", (req, res) => {
+//   res.send(
+//     "Hello guys welcome to my Simple CRUD API, you can use /users to get all users"
+//   );
+// });
 
 // Already in users route
 router.get("/", getUsers);
